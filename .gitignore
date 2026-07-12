@@ -62,3 +62,6 @@ tmp/*.jpeg
 tmp/*.png
 tmp/*.webp
 tmp/*.json
+
+products-ref/
+extracted_images/
