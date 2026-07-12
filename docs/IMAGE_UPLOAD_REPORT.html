@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indo Asian DC — Product Image Upload Report</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f5f5f7;
+      color: #1d1d1f;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 2px solid #dc2b1b;
+    }
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #dc2b1b;
+      margin-bottom: 8px;
+    }
+    header p {
+      font-size: 1.05rem;
+      color: #666;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      border: 1px solid #e8e8ed;
+    }
+    .card.highlight {
+      border: 2px solid #dc2b1b;
+    }
+    .card .number {
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: #dc2b1b;
+      line-height: 1;
+    }
+    .card .label {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .section {
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .section h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .badge.green { background: #e8f5e9; color: #2e7d32; }
+    .badge.yellow { background: #fff8e1; color: #f57f17; }
+    .badge.red { background: #ffebee; color: #c62828; }
+    .badge.blue { background: #e3f2fd; color: #1565c0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    thead th {
+      text-align: left;
+      padding: 12px 16px;
+      background: #f8f8f8;
+      font-weight: 600;
+      color: #444;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    tbody td {
+      padding: 10px 16px;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: top;
+    }
+    tbody tr:hover { background: #fafafa; }
+    .code { font-family: 'SF Mono', Monaco, monospace; font-size: 0.82rem; color: #555; }
+    .filename { font-family: 'SF Mono', Monaco, monospace; font-size: 0.8rem; color: #666; background: #f5f5f5; padding: 2px 8px; border-radius: 4px; }
+    .category-tag {
+      display: inline-block;
+      background: #f0f0f0;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      color: #555;
+    }
+    .reason-box {
+      background: #fafafa;
+      border-left: 4px solid #dc2b1b;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      border-radius: 0 8px 8px 0;
+    }
+    .reason-box h4 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    .reason-box p {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    .image-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .image-tag {
+      background: #f5f5f5;
+      border: 1px solid #e0e0e0;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-family: 'SF Mono', Monaco, monospace;
+      font-size: 0.8rem;
+      color: #555;
+    }
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid #e0e0e0;
+      color: #999;
+      font-size: 0.85rem;
+    }
+    @media print {
+      body { background: #fff; padding: 20px; }
+      .card, .section { box-shadow: none; border: 1px solid #ddd; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Indo Asian DC</h1>
+      <p>Product Image Upload Report &mdash; Sanity CMS</p>
+    </header>
+
+    <div class="summary-grid">
+      <div class="card highlight">
+        <div class="number">106</div>
+        <div class="label">Products Uploaded with Images</div>
+      </div>
+      <div class="card">
+        <div class="number">101</div>
+        <div class="label">Unique Images Uploaded</div>
+      </div>
+      <div class="card">
+        <div class="number">61</div>
+        <div class="label">Categories Created</div>
+      </div>
+      <div class="card">
+        <div class="number">54</div>
+        <div class="label">Images Not Mapped</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>
+        <span class="badge green">Success</span>
+        Uploaded Products with Images (106)
+      </h2>
+      <p style="margin-bottom: 16px; color: #666;">All products below have been successfully created in Sanity with their image assets attached and category references set.</p>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Product Code</th>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Image File</th>
+            </tr>
+          </thead>
+          <tbody id="uploaded-table">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>
+        <span class="badge yellow">Alternate</span>
+        Duplicate / Alternate Images (17)
+      </h2>
+      <p style="margin-bottom: 16px; color: #666;">These are additional shots of products that already have a primary image uploaded. They are documented in the product plan as alternates.</p>
+      <div class="image-list">
+        <span class="image-tag">Banana Roast(1).jpg</span>
+        <span class="image-tag">biriyani-masala.jpg</span>
+        <span class="image-tag">Chemba Puttu.jpg</span>
+        <span class="image-tag">garam-masala.jpg</span>
+        <span class="image-tag">Kozhukkatta.jpg</span>
+        <span class="image-tag">Kozhukkatta(1).jpg</span>
+        <span class="image-tag">LIMEPICKLE_900x.jpg</span>
+        <span class="image-tag">LimePickle_Red_Viswas_900x.jpg</span>
+        <span class="image-tag">LimePickle_White_Viswas_900x.jpg</span>
+        <span class="image-tag">Masala Dosa(1).jpg</span>
+        <span class="image-tag">Onion Vada(1).jpg</span>
+        <span class="image-tag">Panjabi Samosa.jpg</span>
+        <span class="image-tag">punjabi-samos.jpg</span>
+        <span class="image-tag">Tapioca Chips Round Spicy (1).jpg</span>
+        <span class="image-tag">TapiocaRoundEdited.jpg</span>
+        <span class="image-tag">Uzhunnuvada(1).jpg</span>
+        <span class="image-tag">Vegetable Cutlets .jpg</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>
+        <span class="badge red">Unmapped</span>
+        Ambiguous / Unidentifiable Images (20)
+      </h2>
+      <p style="margin-bottom: 16px; color: #666;">These images cannot be mapped to a specific product. They are documented in the product plan as ambiguous.</p>
+
+      <div class="reason-box">
+        <h4>🔍 Cannot Identify from Filename</h4>
+        <p>WhatsApp photos and screenshots with cryptic filenames.</p>
+        <div class="image-list">
+          <span class="image-tag">IMG-20241025-WA0000.jpg</span>
+          <span class="image-tag">IMG-20250206-WA0000.jpg</span>
+          <span class="image-tag">IMG-20250211-WA0005.jpg</span>
+          <span class="image-tag">IMG-20250326-WA0007.jpg</span>
+          <span class="image-tag">IMG-20250412-WA0006.jpg</span>
+          <span class="image-tag">IMG-20250519-WA0018.jpg</span>
+          <span class="image-tag">IMG-20250715-WA0026.jpg</span>
+          <span class="image-tag">Screenshot_20210706-134732~2.jpg</span>
+          <span class="image-tag">Screenshot_2023-01-10-20-37-56-98...</span>
+          <span class="image-tag">d8066a...fcd2.jpg</span>
+        </div>
+      </div>
+
+      <div class="reason-box">
+        <h4>📦 Generic / Brand Shots</h4>
+        <p>Not tied to a specific product SKU.</p>
+        <div class="image-list">
+          <span class="image-tag">VISWAS - Bag - 3D - 01 - 10KG.jpg</span>
+          <span class="image-tag">viswas-pickle.jpg</span>
+          <span class="image-tag">Dates.jpg</span>
+          <span class="image-tag">Elayada Sugar.jpg</span>
+          <span class="image-tag">Sughiyan.jpg</span>
+          <span class="image-tag">Veg Stew.jpg</span>
+          <span class="image-tag">Vendakka Mapas.jpg</span>
+          <span class="image-tag">Vendakka Mappas.jpg</span>
+        </div>
+      </div>
+
+      <div class="reason-box">
+        <h4>🌾 Likely Rice Products (Needs Manual Assignment)</h4>
+        <div class="image-list">
+          <span class="image-tag">Viswas-Palakkadan-Matta-Rice-Bag-1024x576.webp</span>
+          <span class="image-tag">Viswas-Palakkadan-Matta-Rice-Bag-scaled.webp</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>
+        <span class="badge blue">Orphaned</span>
+        Images Not Found in Product Plan (17)
+      </h2>
+      <p style="margin-bottom: 16px; color: #666;">These images exist in the folder but do not appear anywhere in the product upload plan document. They may belong to products not yet catalogued.</p>
+      <div class="image-list">
+        <span class="image-tag">Madura Curry.jpg</span>
+        <span class="image-tag">Pakkavada (1).jpg</span>
+        <span class="image-tag">Pickle Powder-1.jpg</span>
+        <span class="image-tag">Poori Masala.jpg</span>
+        <span class="image-tag">Rasam powder -1.jpg</span>
+        <span class="image-tag">Ripe Banana_400g (1).jpg</span>
+        <span class="image-tag">Sambar Powder-1.jpg</span>
+        <span class="image-tag">Semiya Payasam.jpg</span>
+        <span class="image-tag">Tapioca Chips Round Plain (1).jpg</span>
+        <span class="image-tag">TapiocaStick Spicy 150g.jpg</span>
+        <span class="image-tag">ViswasPinapledropps_900x.png</span>
+        <span class="image-tag">Wheat Puttu & Kadala Curry.jpg</span>
+        <span class="image-tag">pineapple laddu.jpg</span>
+        <span class="image-tag">rick-plum-delight-cake.jpg</span>
+        <span class="image-tag">tender jack 400g.jpg</span>
+        <span class="image-tag">vattayappam 350g.jpg</span>
+        <span class="image-tag">viswas tapioca whole .jpg</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>📋 Next Steps</h2>
+      <ol style="padding-left: 24px; color: #444; line-height: 2;">
+        <li><strong>Review uploaded products</strong> in Sanity Studio at <code>/studio</code></li>
+        <li><strong>Assign ambiguous images manually</strong> if product matches can be identified</li>
+        <li><strong>Update product plan</strong> to include the 17 orphaned images with correct product codes</li>
+        <li><strong>Choose best image from duplicates</strong> and discard alternates if desired</li>
+        <li><strong>Proceed with uploading products without images</strong> (2,253 remaining)</li>
+      </ol>
+    </div>
+
+    <footer>
+      <p>Generated on April 29, 2026 &mdash; Indo Asian DC Product Catalog</p>
+    </footer>
+  </div>
+
+  <script>
+    const products = [
+      { code: "VSDATCARCAK", name: "VIS DATES N' CARROT CAKE 700GM X 10", category: "VISWAS CAKES", image: "dates&cashew-plum-cake.jpg" },
+      { code: "VSDATESC", name: "VIS DATES N' CASHEW CAKE 700GM X 10", category: "VISWAS CAKES", image: "dates_n_cashew_cake.jpg" },
+      { code: "VSBIRVEG", name: "VIS VEG BIRIYANI 400G X12", category: "VISWAS FROZEN BREADS & BREAKFAST", image: "Veg Biriyani.jpg" },
+      { code: "VSCOCBUN", name: "VIS COCONUT BUN 350 X 12", category: "VISWAS FROZEN BREADS & BREAKFAST", image: "Coconut Bun.jpg" },
+      { code: "VSIDI", name: "VIS IDIYAPPAM WHITE 454G X12", category: "VISWAS FROZEN BREADS & BREAKFAST", image: "idiyappam white 350g.jpg" },
+      { code: "VSIDIB", name: "VIS IDIAPPAM BROWN 454G X12", category: "VISWAS FROZEN BREADS & BREAKFAST", image: "Viswas_Ediyappam (1).jpg" },
+      { code: "VSIDIW", name: "VIS IDLI 454GM X 10", category: "VISWAS FROZEN BREADS & BREAKFAST", image: "Viswas_Edli (3).jpg" },
+      { code: "VSIDLY", name: "VIS IDLY WITH CHUTNY 454G X12", category: "VISWAS FROZEN BREADS & BREAKFAST", image: "idly chutney and sambar 350g.jpg" },
+      { code: "VSMAFA16", name: "VIS MALABAR POROTTA (FAMILY) 908X 16", category: "VISWAS FROZEN BREADS & BREAKFAST", image: "Malabar porotta family pack 908g.jpg" },
+      { code: "VSMAL-M", name: "VIS MALABAR POROTTA 330G X36", category: "VISWAS FROZEN BREADS & BREAKFAST", image: "Restaurant Porotta .jpg" },
+      { code: "VSMAL454", name: "VIS MALABAR POROTTA 454GM X 15", category: "VISWAS FROZEN BREADS & BREAKFAST", image: "wheat porotta 454g.jpg" },
+      { code: "VSMASDOSA", name: "VIS MASALA DOSA 400 X 12", category: "VISWAS FROZEN BREADS & BREAKFAST", image: "Masala Dosa.jpg" },
+      { code: "VSPALVSTEW", name: "VIS PALAPAM WITH VEG STEW 450G X10", category: "VISWAS FROZEN BREADS & BREAKFAST", image: "Palappam with Stew.jpg" },
+      { code: "VSPATHI300", name: "VIS PATHIRI 300 X 14", category: "VISWAS FROZEN BREADS & BREAKFAST", image: "Pathiri.jpg" },
+      { code: "VSPULAVEG", name: "VIS VEG PULAO 400G X12", category: "VISWAS FROZEN BREADS & BREAKFAST", image: "Veg Pulao.jpg" },
+      { code: "VSRES-M", name: "VIS CATERING POROTTA 908G X 16", category: "VISWAS FROZEN BREADS & BREAKFAST", image: "Restaurant Porotta .jpg" },
+      { code: "VSANGAMANG", name: "VIS ANGAMALI MANGO CURRY 350 X 12", category: "VISWAS FROZEN CURRYS & THORAN", image: "Angamaly Manga Curry.jpg" },
+      { code: "VSAVIY", name: "VIS AVIAL CURRY 350G X12PKT", category: "VISWAS FROZEN CURRYS & THORAN", image: "aviyal curry 350g.jpg" },
+      { code: "VSCHAMAN", name: "VIS CHAKKAKURU MANGO CURRY 350G X 12", category: "VISWAS FROZEN CURRYS & THORAN", image: "Chakkakuru Manga Curry.jpg" },
+      { code: "VSCHAMEZ", name: "VIS CHAKKAKURU MEZHUKKUPURATTY 350G X 12", category: "VISWAS FROZEN CURRYS & THORAN", image: "Chakkakuru Mezhukkupuratty.jpg" },
+      { code: "VSCHATHORA", name: "VIS CHAKKAKURU THORAN 350G X 12", category: "VISWAS FROZEN CURRYS & THORAN", image: "Chakkakuru Thoran.jpg" },
+      { code: "VSCHE", name: "VIS CHEERATHORAN 350 X 12", category: "VISWAS FROZEN CURRYS & THORAN", image: "cheera thoran 350g.jpg" },
+      { code: "VSIDDLY", name: "VIS IDICHAKKATHORAN 350 X12", category: "VISWAS FROZEN CURRYS & THORAN", image: "idichikka-thoran.jpg" },
+      { code: "VSKOOTTUC", name: "VIS KOOTTU CURRY 350G X 12", category: "VISWAS FROZEN CURRYS & THORAN", image: "Koottucurry.jpg" },
+      { code: "VSPAVAKTH", name: "VIS PAVAKKA THORAN 350G X 12", category: "VISWAS FROZEN CURRYS & THORAN", image: "Pavakka Thoran.jpg" },
+      { code: "VSPAVATH", name: "VIS PAVAKKA THEEYAL 350G X 12", category: "VISWAS FROZEN CURRYS & THORAN", image: "Pavakka Theeyal.jpg" },
+      { code: "VSAVA-M", name: "VIS RESTAURANT UZHUNNUVADA 908G X 12", category: "VISWAS FROZEN SNACKS", image: "Uzhunnuvada.jpg" },
+      { code: "VSBAN", name: "VIS BANANA ROAST 454G X12", category: "VISWAS FROZEN SNACKS", image: "Banana Roast.jpg" },
+      { code: "VSBANAC50", name: "VIS BANANA STEAMED 500 X 12", category: "VISWAS FROZEN SNACKS", image: "Steamed Banana.jpg" },
+      { code: "VSBANF-M", name: "VIS BANANA FRY 350G X12", category: "VISWAS FROZEN SNACKS", image: "Banana Fry.jpg" },
+      { code: "VSBANFRY908", name: "VIS BANANA FRY FAMILY 908G X12", category: "VISWAS FROZEN SNACKS", image: "Banana Fry(1).jpg" },
+      { code: "VSBON", name: "VIS BONDA350GX12", category: "VISWAS FROZEN SNACKS", image: "Bonda.jpg" },
+      { code: "VSCUTFAM", name: "VIS CUTLET VEG FAMILY 908G X 12", category: "VISWAS FROZEN SNACKS", image: "Veg Cutlet.jpg" },
+      { code: "VSCUTL", name: "VIS CUTLET VEG 350GX 12 @2.20", category: "VISWAS FROZEN SNACKS", image: "vegetable cutlet 350g .jpg" },
+      { code: "VSEL", name: "VIS ELAYADA JACKFRUIT 350G X12", category: "VISWAS FROZEN SNACKS", image: "elayada ( jackfruit) 350g.jpg" },
+      { code: "VSELAYJAG", name: "VIS ELAYADA JAGGERY 350G X12", category: "VISWAS FROZEN SNACKS", image: "Elayada Jaggery.jpg" },
+      { code: "VSHALWAB", name: "VIS HALWA BLACK 400G X 14", category: "VISWAS FROZEN SNACKS", image: "halwa black.jpg" },
+      { code: "VSHALWAR", name: "VIS HALWA RED 400G X 14", category: "VISWAS FROZEN SNACKS", image: "red halwa.jpg" },
+      { code: "VSJAL", name: "VIS JILEBI 227G X12 @1.99", category: "VISWAS FROZEN SNACKS", image: "jilebi 350g.jpg" },
+      { code: "VSKOZ", name: "VIS KOZHUKKATTA  350G X12", category: "VISWAS FROZEN SNACKS", image: "kozhukkatta 350g.jpg" },
+      { code: "VSKUM", name: "VIS KUMBILAPPAM JACKFRUIT 350g x12", category: "VISWAS FROZEN SNACKS", image: "kumbilappam 350g.jpg" },
+      { code: "VSLAD-M", name: "VIS LADDU 350G X12", category: "VISWAS FROZEN SNACKS", image: "laddu 350g.jpg" },
+      { code: "VSNEY", name: "VIS NEYYAPPAM 350G X12", category: "VISWAS FROZEN SNACKS", image: "Neyyappam.jpg" },
+      { code: "VSNEYYAP", name: "VIS NEYYAPPAM FAMILY 908G X12", category: "VISWAS FROZEN SNACKS", image: "Neyyappam(1).jpg" },
+      { code: "VSPALLA", name: "VIS PALAPAM 250G X10", category: "VISWAS FROZEN SNACKS", image: "Viswas_Palappam (1).jpg" },
+      { code: "VSPAR", name: "VIS PARIPPUVADA 350G X12", category: "VISWAS FROZEN SNACKS", image: "Parippuvada.jpg" },
+      { code: "VSPARIPF12", name: "VIS PARIPPUVADA FAMILY 908G X 12", category: "VISWAS FROZEN SNACKS", image: "Parippuvada_2.jpg" },
+      { code: "VSPUNJ", name: "VIS PUNJABI SAMOSA300G X 12", category: "VISWAS FROZEN SNACKS", image: "punjabi samosa 350g.jpg" },
+      { code: "VSPUTKADC", name: "VIS CHEMBA PUTTU N KADALA  454 X 10", category: "VISWAS FROZEN SNACKS", image: "Chemba Puttu & Kadala Curry.jpg" },
+      { code: "VSPUTKADW", name: "VIS PUTTU N KADALA CURRY 454 X 10", category: "VISWAS FROZEN SNACKS", image: "White Puttu & Kadala Curry.jpg" },
+      { code: "VSSU", name: "VIS SUKHIYAN 350G X12", category: "VISWAS FROZEN SNACKS", image: "sukhiyan 350g.jpg" },
+      { code: "VSULLIVADA", name: "VIS ONION VADA 350G X12", category: "VISWAS FROZEN SNACKS", image: "Onion Vada.jpg" },
+      { code: "VSUNN", name: "VIS UNNIYAPPAM 350G X12", category: "VISWAS FROZEN SNACKS", image: "Unniyappam.jpg" },
+      { code: "VSUNNIY", name: "VIS UNNIYAPPAM FAMILY 908G X12", category: "VISWAS FROZEN SNACKS", image: "frozen-unniyappam.jpg" },
+      { code: "VSUZ", name: "VIS UZHUNNUVADA 350G X12", category: "VISWAS FROZEN SNACKS", image: "uzhunnuvada 350g.jpg" },
+      { code: "VSVEGS", name: "VIS VEGETABLE SAMOSA 300GX 12", category: "VISWAS FROZEN SNACKS", image: "Veg Samosa.jpg" },
+      { code: "VSARVI", name: "VIS ARVI 400GM X 12", category: "VISWAS FROZEN VEG & RAW ITEMS", image: "Arvi.jpg" },
+      { code: "VSAVI-M", name: "VIS AVIYAL MIX 400G X12", category: "VISWAS FROZEN VEG & RAW ITEMS", image: "aviyal curry 350g.jpg" },
+      { code: "VSBITTE-M", name: "VIS BITTER GOURD CUT 400G X12", category: "VISWAS FROZEN VEG & RAW ITEMS", image: "bittergourd 400g.jpg" },
+      { code: "VSCU-M", name: "VIS CUT MANGO GREEN 400G X12", category: "VISWAS FROZEN VEG & RAW ITEMS", image: "cut mango green 400g.jpg" },
+      { code: "VSGOOSB-M", name: "VS GOOSEBERRY 400G X12", category: "VISWAS FROZEN VEG & RAW ITEMS", image: "Gooseberry.jpg" },
+      { code: "VSGR-M", name: "VIS GRATED COCONUT 400G X32", category: "VISWAS FROZEN VEG & RAW ITEMS", image: "grated-coconut.jpg" },
+      { code: "VSGRE", name: "VIS GREEN CHILLY KANDARY200X24", category: "VISWAS FROZEN VEG & RAW ITEMS", image: "birds eye chilli .jpg" },
+      { code: "VSJACF", name: "VIS JACK FRUIT GREEN 400G X20", category: "VISWAS FROZEN VEG & RAW ITEMS", image: "jackfruit green (Whole) 400g.jpg" },
+      { code: "VSJACFR", name: "VIS JACKFRUIT GREEN SLICED 400G X20", category: "VISWAS FROZEN VEG & RAW ITEMS", image: "jackfruit green sliced 400g.jpg" },
+      { code: "VSLO", name: "VIS LONG BEANS 400GRM X 12", category: "VISWAS FROZEN VEG & RAW ITEMS", image: "long beans (cut) 400g.jpg" },
+      { code: "VSSA-M", name: "VIS SAMBAR MIX 400G X12", category: "VISWAS FROZEN VEG & RAW ITEMS", image: "Sambar mix 400 g.jpg" },
+      { code: "VSBIR-M", name: "VS BIRIYANI MASALA 100G X12", category: "VISWAS MASALAS & SPICES", image: "Biriyani Masala-2.jpg" },
+      { code: "VSCHIC-M", name: "VS CHICKEN MASALA 160G X12", category: "VISWAS MASALAS & SPICES", image: "Chicken Masala-1.jpg" },
+      { code: "VSEGG-M", name: "VS EGG MASALA 160G X12", category: "VISWAS MASALAS & SPICES", image: "Egg Masala-1.jpg" },
+      { code: "VSFIS-M", name: "VS FISH  MASALA 160G X12", category: "VISWAS MASALAS & SPICES", image: "Fish Masala-1.jpg" },
+      { code: "VSGAR-M", name: "VS GARAM MASALA 100G X12", category: "VISWAS MASALAS & SPICES", image: "Garam Masala-1.jpg" },
+      { code: "VSMEA-M", name: "VS MEAT MASALA 160G X12", category: "VISWAS MASALAS & SPICES", image: "Meat Masala-1.jpg" },
+      { code: "VSVEG-M", name: "VS VEGETABLE MASALA 200G X12", category: "VISWAS MASALAS & SPICES", image: "Vegetable Masala-1.jpg" },
+      { code: "VSSADHYA2", name: "VIS SADHYA 4.75 KG X 2", category: "VISWAS OTHER", image: "onam-sadhya.png" },
+      { code: "VSMIXFR-M", name: "VS MIX FRUIT JAM 500G X12", category: "VISWAS OTHER", image: "MIXEDFRUITJAM_900x.jpg" },
+      { code: "VSPAL", name: "VS PALADA MIX 250G X24", category: "VISWAS OTHER", image: "Palada.jpg" },
+      { code: "VSPINE-M", name: "VS PINEAPPLE JAM 500G X12", category: "VISWAS OTHER", image: "PINAPLEJAM_900x.jpg" },
+      { code: "VSCUT-M", name: "VS CUT MANGO PICKLE 400G X12", category: "VISWAS PICKLES", image: "CutMangoPickleViswas_900x.jpg" },
+      { code: "VSDATESP", name: "VS DATES PICKLE 400GM X 12", category: "VISWAS PICKLES", image: "DATESPICKLE_900x.jpg" },
+      { code: "VSHOT-M", name: "VS HOT & SWEET LIME PICKLE 400G X12", category: "VISWAS PICKLES", image: "Lime Hot.jpg" },
+      { code: "VSKADU-M", name: "VS KADUMANGO PICKLE 400G X12", category: "VISWAS PICKLES", image: "KadumangoPickleViswas_900x.jpg" },
+      { code: "VSKANMACHU", name: "VS KANDARI MANGO CHUTNEY 200G X 24", category: "VISWAS PICKLES", image: "Kadumanga.jpg" },
+      { code: "VSLIM-M", name: "VS LIME RED PICKLE 400G X12", category: "VISWAS PICKLES", image: "Lime Red.jpg" },
+      { code: "VSLIME-M", name: "VS LIME WHITE PICKLE 400G X12", category: "VISWAS PICKLES", image: "White Lime.jpg" },
+      { code: "VSMIXVP", name: "VS MIX VEG PICKLE 400G X12", category: "VISWAS PICKLES", image: "Veg Pickle.jpg" },
+      { code: "VSPULIINCHI", name: "VS PULIINCHI PICKLE 400GM X 12", category: "VISWAS PICKLES", image: "PULIENCHI_900x.jpg" },
+      { code: "VSTEN-M", name: "VS TENDER MANGO PICKLE 400G X12", category: "VISWAS PICKLES", image: "Tender Mango.jpg" },
+      { code: "VSVAD-M", name: "VS VADUKAPULI RED PICKLE 400G X12", category: "VISWAS PICKLES", image: "VADUKAPULI_900x.jpg" },
+      { code: "VSDOS-M", name: "VS DOSA PODI 1KG X12 *PRICE MARK*", category: "VISWAS POWDERS & FLAKES", image: "Viswas_Dosa (1).jpg" },
+      { code: "VSIDIYAP1KG", name: "VS IDIYAPPAM PODI 1KG X 12 *PRICE MARK*", category: "VISWAS POWDERS & FLAKES", image: "Viswas_Ediyappam (1).jpg" },
+      { code: "VSINTUP-M", name: "VS INS UPPUMA MIX 1KG X12", category: "VISWAS POWDERS & FLAKES", image: "Viswas_Upma Mix (1).jpg" },
+      { code: "VSMAI-M", name: "VS MAIDA 1KG X12", category: "VISWAS POWDERS & FLAKES", image: "Viswas_Maida (1).jpg" },
+      { code: "VSPALA-M", name: "VS INST PALAPPAM 1KG X12 *PRICE MARK*", category: "VISWAS POWDERS & FLAKES", image: "Viswas_Palappam (1).jpg" },
+      { code: "VSPATHRI1KG", name: "VS PATHIRI PODI 1KG X 12 *PRICE MARK*", category: "VISWAS POWDERS & FLAKES", image: "Viswas_Pathiripodi (1).jpg" },
+      { code: "VSPUTT-M", name: "VS STEAMED PUTTU PODI WHITE 1KG X12  PM", category: "VISWAS POWDERS & FLAKES", image: "Viswas_Puttu white (1).jpg" },
+      { code: "VSPUTTC-M", name: "VS PUTTU PODI CHEMBA 1KG X12 *PRICE MARK", category: "VISWAS POWDERS & FLAKES", image: "Viswas_ Chemba Puttu (1).jpg" },
+      { code: "VSRICEF", name: "VS RICE FLOUR UNROASTED 1KGX12 *PRICE MA", category: "VISWAS POWDERS & FLAKES", image: "Viswas_Rice Powder (1).jpg" },
+      { code: "VSROS-M", name: "VS ROSTED RAVA 1KG X12", category: "VISWAS POWDERS & FLAKES", image: "Viswas_Roasted Rava (1).jpg" },
+      { code: "VSWHEPUT1KG", name: "VS WHEAT PUTTU PODI 1KG X 12 *PRICE MARK", category: "VISWAS POWDERS & FLAKES", image: "Viswas_Wheat Puttu Podi (1).jpg" },
+      { code: "GRATEDCOCONUT", name: "GRATED COCONUT 400G", category: "VISWAS SNACKS", image: "grated-coconut.jpg" },
+      { code: "VSBAB", name: "VS BANANA CHIPS BOTTLE 300X15", category: "VISWAS SNACKS", image: "Copy-of-Viswas-Banana-Chips-400gms.jpg" },
+      { code: "VSBANA-M", name: "VS BANANA CHIPS (RIPE) 150G X 30", category: "VISWAS SNACKS", image: "Banana Chips_150g (1).jpg" },
+      { code: "VSBANAC-M", name: "VS BANANA CHIPS 400X20", category: "VISWAS SNACKS", image: "Spicy Banana Chips_400g (1).jpg" },
+      { code: "VSBANAS30", name: "VS BANANA CHIPS 800G X 10", category: "VISWAS SNACKS", image: "Stand Up Pouch_Banana Chips.jpg" },
+      { code: "VSCHAKAV", name: "VS CHAKKA VARATTY 250G X 16", category: "VISWAS SNACKS", image: "chakka varatti balls.jpg" },
+    ];
+
+    const tbody = document.getElementById('uploaded-table');
+    products.forEach((p, i) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${i + 1}</td>
+        <td class="code">${p.code}</td>
+        <td>${p.name}</td>
+        <td><span class="category-tag">${p.category}</span></td>
+        <td><span class="filename">${p.image}</span></td>
+      `;
+      tbody.appendChild(row);
+    });
+  </script>
+</body>
+</html>

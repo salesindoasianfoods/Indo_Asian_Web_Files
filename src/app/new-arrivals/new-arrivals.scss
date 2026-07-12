@@ -1,0 +1,55 @@
+.new-arrivals-page {
+  min-height: 100vh;
+  background: #f7f7f7;
+}
+
+.new-arrivals-header {
+  background: #fff;
+  border-bottom: 1px solid #eaeaea;
+  padding: 20px 0;
+  
+  .container {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .back-link {
+    color: #666;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.2s;
+    
+    &:hover {
+      color: #cc0000;
+    }
+  }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+  }
+}
+
+.new-arrivals-content {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.new-arrivals-banner {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  display: block;
+}

@@ -1,0 +1,63 @@
+# Indo Asian DC - Current Project Context
+
+**Last Updated:** June 08, 2026, 1:51 PM IST  
+**Project:** Indo Asian Foods Distribution Center (`indo_asian_dc`)  
+**Branch:** `master`  
+**AI Assistant:** Antigravity  
+
+---
+
+## 1. Project Overview & Tech Stack
+The project is a Next.js (App Router) storefront built for **Indo Asian Foods Ltd**. It leverages:
+* **Framework:** Next.js 15+ (App Router) with TypeScript.
+* **Styling:** Vanilla CSS and SCSS with a custom design token system (mapped in `src/styles/_tokens.scss` and global variables injected via `next.config.ts`).
+* **CMS:** Sanity.io for products, categories, and homepage slider elements.
+* **Notifications:** Green API integration to send order summaries to the owner's WhatsApp, backed up by client-side redirection to `wa.me` in case of API failure.
+
+---
+
+## 2. Storefront Features & Architecture
+
+### 🔑 Authentication
+* **Cookie-based login:** Implemented in [route.ts](file:///Users/mac/Fenar/Web%20Works/indo_asian_dc/src/app/api/auth/login/route.ts) which verifies passwords against Sanity.
+* **Vercel Production Fix:** The silent/failed authentication issue previously encountered in the Vercel build has been successfully resolved.
+
+### 🛒 Cart & UI Hydration
+* **Hydration State:** Designed a `hydrated` state in `CartContext` to avoid UI flickering, showing a shimmer skeleton loader while reading from `localStorage`.
+* **Persistent Scroll Area:** Custom [CartScrollArea](file:///Users/mac/Fenar/Web%20Works/indo_asian_dc/src/components/shop-page/ShopPageScreen.tsx) forces scrollbars to remain visible on all platforms (preventing macOS overlay hiding).
+* **Product Detail Page Integration:** The "Add to Cart", quantities, and related items on the product page are fully wired to the global Cart Context.
+
+### 🔍 Search sugerstions
+* **React Portal:** Sugesstions dropdown renders inside a Portal to bypass clipping/z-index issues on the header bar.
+* **Performance:** Uses client-side fuzzy suggestions, but plans are in place to optimize this with a backend endpoint.
+
+---
+
+## 3. Catalog & Database Actions
+
+### 🗂️ Category Reordering & Removal
+* **Removed Category:** Deleted the `"INDO - Festival Offer"` category document (ID: `b6dac588-877e-473f-9759-64ac945df06a`) directly from the Sanity database as it contained 0 products.
+* **PDF Ordering Alignment:** Re-sorted all remaining 62 categories sequentially to match the layout in [AVAILABLE PRODUCT LIST IAF.pdf](file:///Users/mac/Fenar/Web%20Works/indo_asian_dc/product-files/AVAILABLE%20PRODUCT%20LIST%20IAF.pdf).
+* **Fuzzy Mapping Resolving:** Analyzed pages with split/empty category headers, mapping products to their corresponding Sanity category IDs (e.g. resolving `AMBAZH-M` to `AHA GREEN VALLEY` and `GRB` to `GRB SWEETS`).
+* **Sanity Update:** Applied sequential `order` values to all category documents in Sanity. The storefront queries category list using `order(order asc)`, which automatically aligns the top navigation chips and sidebar layout.
+
+### 🛍️ Product Catalog Updates
+* **Tasty Nibbles Import:** Imported 22 new Tasty Nibbles frozen products. Linked 18 of them to their official packshot images in `product-files/new-product-3`. Left 4 products image-less as no assets were available.
+* **VSBAN Product Correction:** Corrected product `VSBAN` (Document ID: `454ff278-8c47-4a71-b2d5-855d877be0d3`):
+  * Changed name from `"VIS BANANA ROAST 454G X12 @2.91"` to `"VIS BANANA ROAST 454G X12"`.
+  * Changed price from `"500"` to `"34.99"`.
+  * Created and assigned slug `"vis-banana-roast-454g-x12"`.
+
+---
+
+## 4. Key Scripts & Automation Directory
+* `scripts/upload-tasty-nibbles.ts`: Bulk uploads Tasty Nibbles items.
+* `scripts/upload-tasty-nibbles-images.ts`: Maps and links Tasty Nibbles packshot images.
+* `scripts/check-current-status.ts`: Script to audit image coverage across the catalog.
+
+---
+
+## 5. Next Steps
+1. **Search Suggestion Endpoint:** Implement a dedicated `/api/product-search` endpoint for suggestions/typeahead search to optimize client performance over 2,300+ items.
+2. **Retrieve Missing Images:** Collect and upload packshot assets for the 4 Tasty Nibbles products currently listed without images.
+3. **Mobile Drawer Layouts:** Polish responsive behaviors and drawer styling for smaller screens.

@@ -1,0 +1,187 @@
+.login-page-container-main {
+  background: $pure-white;
+}
+
+.login-page-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card {
+  width: min(100%, 434px);
+  border: 1px solid rgba($pure-black, 0.1);
+  border-radius: 20px;
+  background: $pure-white;
+  box-shadow: 0 0 0 1px rgba($pure-black, 0.02), 0 12px 28px rgba($pure-black, 0.04);
+  padding: 27px 27px 35px;
+}
+
+.login-card__brand {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 23px;
+}
+
+.login-card__logo {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 63px;
+  height: 63px;
+  background: $main-cta-red;
+  color: $pure-white;
+  padding: 7px 6px 6px;
+  font-family: $font-sf-pro;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: 0.02em;
+  text-align: center;
+
+  span {
+    display: block;
+  }
+}
+
+.login-card__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-card__title {
+  margin: 0;
+  color: $pure-black;
+  font-family: $font-sf-pro;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+}
+
+.login-card__description {
+  margin: 14px 0 0;
+  max-width: 330px;
+  color: #8f8f8f;
+  font-family: $font-sf-pro;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.26;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 18px;
+}
+
+.login-form__label {
+  margin-bottom: 7px;
+  color: $pure-black;
+  font-family: $font-sf-pro;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.login-form__input {
+  width: 100%;
+  height: 42px;
+  border: 1px solid #e4e5e7;
+  border-radius: 8px;
+  background: $pure-white;
+  outline: none;
+  padding: 0 16px;
+  color: $pure-black;
+  font-family: $font-sf-pro;
+  font-size: 14px;
+  font-weight: 400;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: #9c9c9c;
+  }
+
+  &:focus {
+    border-color: rgba($main-cta-red, 0.45);
+    box-shadow: 0 0 0 3px rgba($main-cta-red, 0.12);
+  }
+
+  &.has-error {
+    border-color: $main-cta-red;
+    box-shadow: 0 0 0 3px rgba($main-cta-red, 0.1);
+  }
+}
+
+.login-form__error {
+  margin: 8px 0 0;
+  color: $main-cta-red;
+  font-family: $font-sf-pro;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.login-form__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 42px;
+  margin-top: 20px;
+  border: 0;
+  border-radius: 8px;
+  background: $main-cta-red;
+  color: $pure-white;
+  cursor: pointer;
+  font-family: $font-sf-pro;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  transition: filter 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+
+  &:hover {
+    filter: brightness(0.98);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:disabled,
+  &.is-loading {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+
+@media (max-width: 640px) {
+  .login-card {
+    width: 100%;
+    margin: auto; // Ensures flex container honors center weighting
+    border-radius: 18px;
+    padding: 22px 20px 24px;
+  }
+
+  .login-card__brand {
+    margin-bottom: 20px;
+  }
+
+  .login-card__logo {
+    width: 58px;
+    height: 58px;
+    font-size: 9px;
+  }
+
+  .login-card__title {
+    font-size: 22px;
+    line-height: 1.08;
+  }
+
+  .login-card__description {
+    max-width: none;
+    font-size: 14px;
+  }
+}
