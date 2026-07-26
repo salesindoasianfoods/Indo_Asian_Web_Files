@@ -27,6 +27,12 @@ export const orderInvoiceType = defineType({
       type: "number",
     }),
     defineField({
+      name: "orderData",
+      title: "Order Data",
+      type: "text",
+      description: "Full text readout of the order details",
+    }),
+    defineField({
       name: "pdfFile",
       title: "Invoice PDF",
       type: "file",

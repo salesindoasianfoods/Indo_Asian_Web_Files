@@ -56,7 +56,8 @@ function buildMessage(
 async function storeOrderInSanity(
   orderCode: string,
   customer: { name: string; businessName: string; address1: string; address2: string; zip: string; notes: string },
-  total: number
+  total: number,
+  orderData: string
 ): Promise<void> {
   const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
   const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
@@ -81,6 +82,7 @@ async function storeOrderInSanity(
     customerName: customer.name,
     businessName: customer.businessName || undefined,
     totalAmount: total,
+    orderData,
     greenApiSent: false,
     orderedAt: new Date().toISOString(),
   });
@@ -110,7 +112,7 @@ export async function POST(req: NextRequest) {
     console.log(`\n📦 Order ${orderCode} | ${customer.name} | £${total}`);
 
     // Store order in Sanity (always)
-    storeOrderInSanity(orderCode, customer, total).catch((e) =>
+    storeOrderInSanity(orderCode, customer, total, message).catch((e) =>
       console.error("[place-order] Failed to store order in Sanity:", e)
     );
 
