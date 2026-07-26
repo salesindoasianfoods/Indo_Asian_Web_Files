@@ -31,19 +31,6 @@ export const orderInvoiceType = defineType({
       title: "Order Data",
       type: "text",
       description: "Full text readout of the order details",
-    }),
-    defineField({
-      name: "pdfFile",
-      title: "Invoice PDF",
-      type: "file",
-      options: { accept: "application/pdf" },
-    }),
-    defineField({
-      name: "greenApiSent",
-      title: "Sent via Green API",
-      type: "boolean",
-      initialValue: false,
-    }),
     defineField({
       name: "orderedAt",
       title: "Ordered At",

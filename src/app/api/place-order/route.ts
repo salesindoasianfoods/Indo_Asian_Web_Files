@@ -83,7 +83,6 @@ async function storeOrderInSanity(
     businessName: customer.businessName || undefined,
     totalAmount: total,
     orderData,
-    greenApiSent: false,
     orderedAt: new Date().toISOString(),
   });
 
