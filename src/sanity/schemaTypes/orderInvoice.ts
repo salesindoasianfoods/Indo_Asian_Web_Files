@@ -31,6 +31,7 @@ export const orderInvoiceType = defineType({
       title: "Order Data",
       type: "text",
       description: "Full text readout of the order details",
+    }),
     defineField({
       name: "orderedAt",
       title: "Ordered At",
